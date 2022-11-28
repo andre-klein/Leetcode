@@ -34,3 +34,25 @@ Space complexity:
 
 => O(n)
 """
+
+class Solution2:
+    def minIncrementForUnique(self, nums: List[int]) -> int:
+        
+        nums.sort()
+        currentRef = nums[0]
+        increments = 0
+        
+        for n in nums:
+            if currentRef > n:
+                increments += currentRef - n
+                currentRef += 1
+            
+            else:
+                currentRef = n + 1
+        
+        return increments
+
+"""
+Space complexity:
+Assuming mergesort => O(n)
+"""
