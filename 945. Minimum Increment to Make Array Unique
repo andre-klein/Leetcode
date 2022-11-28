@@ -53,6 +53,9 @@ class Solution2:
         return increments
 
 """
+Time complexity:
+Assuming mergesort => O(nlogn)
+
 Space complexity:
 Assuming mergesort => O(n)
 """
