@@ -1,0 +1,31 @@
+
+class Solution1:
+    def minIncrementForUnique(self, nums: List[int]) -> int:
+        
+        x = len(nums) # O(1)
+        y = max(nums) # O(n)
+        z = x + y # O(1)
+        
+        duplicateList = []
+        increments = 0
+        duplicateMap = collections.Counter(nums) # O(n)
+        
+        for i in range(z): # O(z)
+            if duplicateMap[i] >= 2:
+                duplicateList.extend( [i] * (duplicateMap[i] - 1) ) # O(n) total not per loop
+            elif len(duplicateList) > 0 and duplicateMap[i] == 0: # O(1)
+                k = duplicateList.pop() # O(1)
+                distance = i - k
+                increments += distance
+        
+        return increments
+
+"""
+Big O analysis:
+1- O(n) to find max
+2- O(n) for counter hash map
+3- O(n + m) for outer loop where is max(nums)
+4- O(n) for all duplicates
+
+O(n) + O(n) + O(n + m) + O(n) => O(n+m)
+"""
