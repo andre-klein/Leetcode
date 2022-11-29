@@ -1,0 +1,37 @@
+# Subproblem
+# Let K(v) = min coins if amount v can be broken down by denominations up to index i
+# Otherweise, K(v) = -1
+
+# Base case
+# K(0) = 0
+
+# Recurrence
+# K(v) = min_i{1 + K(v-vi) : vi <= v<= amount and i<=len(coins)}
+# Otherwise, K(v) = -1 if no combination of coins exists
+
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        
+        K = [0]
+        D = len(coins)
+        initial = float('inf')
+            
+        for v in range(1, amount+1): # O(amount)
+            K.append(initial)
+            for i in range(D): # O(len(coins))
+                x = coins[i]
+                
+                if x == v:
+                    K[v] = 1
+                    break
+                
+                elif x < v:
+                    K[v] = min(K[v-x] + 1, K[v])
+                            
+        
+        if K[amount] != initial:
+            return K[amount]
+        
+        return -1
+    
+# O(amount * len(coins))
