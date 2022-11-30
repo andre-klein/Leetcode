@@ -1,0 +1,46 @@
+class Solution:
+    def calculate(self, s: str) -> int:
+
+        strNum = ''
+        stack = []
+        op = '+'
+        
+        def helper(inputStr, op): # O(1)
+            if op == '+':
+                num = int(inputStr)
+                stack.append(num)
+            elif op == '-':
+                num = int(inputStr)
+                stack.append(-num)
+            elif op == '*':
+                num = int(inputStr)
+                stack.append(stack.pop() * num)
+            elif op == '/':
+                num = int(inputStr)
+                stack.append(int(stack.pop() / num))
+        
+        for char in s: # O(n)
+            if char.isnumeric():
+                strNum += char
+            else:
+                if char == '(':
+                    stack.append(op)
+                    op = '+'
+                    continue
+
+                helper(strNum, op)
+                strNum = ''
+                
+                if char == ')':
+                    num = 0
+                    while isinstance(stack[-1], int): # O(n) max in a loop on average O(1)
+                        num += stack.pop()
+                    op = stack.pop()
+                    helper(str(num), op)
+                
+                op = char
+                
+        helper(strNum, op)
+        return sum(stack)
+
+# Time complexity is O(n) and space complexity is O(n) since our stack won't hold anything bigger than s
