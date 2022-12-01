@@ -9,7 +9,6 @@ class Solution:
                 result.pop()
                 if len(result) == 0:
                     break
-            
             if len(result) > 0:
                 if negAst == -result[-1]:
                     result.pop()
@@ -19,8 +18,7 @@ class Solution:
                 result.append(negAst)
                 
         for i in range(1, len(asteroids)):
-            current = asteroids[i]
-            result.append(current)
+            result.append(asteroids[i])
             
             if len(result) > 1:
                 if result[-1] < 0 and result[-2] > 0:
