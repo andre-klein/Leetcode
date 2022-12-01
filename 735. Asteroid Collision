@@ -1,0 +1,32 @@
+class Solution:
+    def asteroidCollision(self, asteroids: List[int]) -> List[int]:
+        
+        result = [asteroids[0]]
+
+        def collide(result):
+            negAst = result.pop()
+            while abs(negAst) > abs(result[-1]) and result[-1] > 0:
+                result.pop()
+                if len(result) == 0:
+                    break
+            
+            if len(result) > 0:
+                if negAst == -result[-1]:
+                    result.pop()
+                elif result[-1] < 0:
+                    result.append(negAst)
+            else:
+                result.append(negAst)
+                
+        for i in range(1, len(asteroids)):
+            current = asteroids[i]
+            result.append(current)
+            
+            if len(result) > 1:
+                if result[-1] < 0 and result[-2] > 0:
+                    collide(result)
+        
+        return result
+    
+# Time complexity is O(2N) because we push and pop each asteroid at most once
+# Space complexity is O(N) because our stack is at most the same size as the input
