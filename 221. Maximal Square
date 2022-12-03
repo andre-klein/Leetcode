@@ -1,0 +1,29 @@
+# T(i,j) = large square in matrix ending at i,j
+# T(i,j) = min(T(i-1,j), T(i,j-1), T(i-1,j-1)) + 1 if matrix(i,j) = 1
+# T(i,j) = 0 otherwise
+
+class Solution:
+    def maximalSquare(self, matrix: List[List[str]]) -> int:
+        
+        rows = len(matrix)
+        cols = len(matrix[0])
+        result = [[int(x) for x in matrix[0]], [0]*cols] # O(n)
+        rMax = max(result[0]) # O(n)
+
+        for i in range(1, rows): O(m)
+            idx = i % 2
+            curr = int(matrix[i][0])
+            result[idx][0] = curr
+            rMax = max(rMax, curr)
+
+            for j in range(1, cols): O(m)
+                if int(matrix[i][j]) == 1:
+                    result[idx][j] = min(result[idx-1][j], result[idx][j-1], result[idx-1][j-1]) + 1
+                    rMax = max(rMax, result[idx][j])
+                else:
+                    result[idx][j] = 0
+        
+        return rMax*rMax
+
+# Time complexity = O(m*n)
+# Space complexity = O(2n) = O(n)
