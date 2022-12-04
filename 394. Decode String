@@ -1,0 +1,32 @@
+class Solution:
+    def decodeString(self, s: str) -> str:
+        result, temp = '', ''
+        mul, exp, brackets = 0, 0 ,0
+        multiply = False
+        
+        for i in range(len(s)-1, -1, -1):
+            if s[i].isnumeric():
+                mul += pow(10, exp) * int(s[i])
+                exp += 1
+            else:
+                exp = 0
+                if i+1 < len(s) and s[i+1].isnumeric():
+                    if brackets == 0:
+                        result += temp * mul
+                        temp = ''
+                    else:
+                        temp *= mul
+                    mul = 0
+                
+                if s[i] == ']':
+                    brackets += 1
+                elif s[i] == '[':
+                    brackets -= 1
+                elif brackets > 0:
+                    temp += s[i]
+                else:
+                    result += s[i]
+            print(result, ' ', temp)
+
+        result += temp * mul
+        return result[::-1]
