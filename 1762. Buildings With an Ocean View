@@ -1,0 +1,14 @@
+class Solution:
+    def findBuildings(self, heights: List[int]) -> List[int]:
+        rMax = 0
+        stack = []
+        
+        for i in range(len(heights)-1, -1, -1): # O(n)
+            if heights[i] > rMax:
+                rMax = heights[i]
+                stack.append(i)
+        
+        return stack[::-1] # O(n)
+    
+# Time = O(n)
+# Space = O(n)
