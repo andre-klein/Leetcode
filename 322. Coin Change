@@ -9,6 +9,8 @@
 # K(v) = min_i{1 + K(v-vi) : vi <= v<= amount and i<=len(coins)}
 # Otherwise, K(v) = -1 if no combination of coins exists
 
+# N.B. solution could use some improvement with pre-declared list D
+
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
         
