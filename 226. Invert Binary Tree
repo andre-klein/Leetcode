@@ -7,15 +7,17 @@
 class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         
+        stack = []
+        
         if root:
-            newLeft = root.right
-            newRight = root.left
-            root.left = newLeft
-            root.right = newRight
-            
-            if root.left != None:
-                self.invertTree(root.left)
-            if root.right != None:
-                self.invertTree(root.right)
+            stack = [root]
+        
+        while stack:
+            node = stack.pop()
+            if node.left:
+                stack.append(node.left)
+            if node.right:
+                stack.append(node.right)
+            node.left, node.right = node.right, node.left
         
         return root
