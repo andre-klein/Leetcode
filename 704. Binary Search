@@ -8,7 +8,6 @@ class Solution:
                 return -1
             
             m = (i+j)//2
-            print(i, m, j)
             if target > nums[m]:
                 i = m + 1
             elif target < nums[m]:
