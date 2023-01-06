@@ -1,0 +1,17 @@
+class Solution:
+    def longestPalindrome(self, s: str) -> int:
+        dict_lp = {}
+        
+        for char in s:
+            dict_lp[char] = dict_lp.get(char, 0) + 1
+        
+        total, odds = 0, 0
+        
+        for key in dict_lp:
+            total += dict_lp[key]
+            if dict_lp[key] % 2 == 1:
+                odds += 1
+        
+        if odds == 0:
+            return total
+        return total - odds + 1
