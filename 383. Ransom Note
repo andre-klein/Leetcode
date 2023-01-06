@@ -1,0 +1,16 @@
+class Solution:
+    def canConstruct(self, ransomNote: str, magazine: str) -> bool:
+        dict_R = {}
+        
+        for char in ransomNote:
+            dict_R[char] = dict_R.get(char, 0) + 1
+        
+        for char in magazine:
+            if char in dict_R:
+                dict_R[char] -= 1
+                if dict_R[char] == 0:
+                    dict_R.pop(char)
+                    if len(dict_R) == 0:
+                        return True
+
+        return False
