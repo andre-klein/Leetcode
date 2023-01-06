@@ -1,29 +1,17 @@
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
-        if target > nums[-1] or target < nums[0]:
-            return -1
-        
-        mid = len(nums) // 2
-        
-        if nums[-1] == target:
-            return len(nums) - 1
-        
-        if nums[0] == target:
-            return 0
+        i = 0
+        j = len(nums) - 1
 
-        if nums[mid-1] == target:
-            return mid-1
-        
-        if nums[mid-1] > target:
-            returned = self.search(nums[:mid-1], target)
-            if returned == -1:
+        while j>=i:
+            if nums[j] < target or target < nums[i]:
                 return -1
+            
+            m = (i+j)//2
+            print(i, m, j)
+            if target > nums[m]:
+                i = m + 1
+            elif target < nums[m]:
+                j = m - 1
             else:
-                return returned
-        
-        if nums[mid-1] < target:
-            returned = self.search(nums[mid:], target)
-            if returned == -1:
-                return -1
-            else:
-                return returned + mid
+                return m
