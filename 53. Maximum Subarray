@@ -1,0 +1,16 @@
+# T[i] = max subarray sum up to index i
+# T[0] = 0
+# T[i] = T[i-1] + nums[i] if sum(T[i-1] + nums[i]) > 0, 0 otherwise
+
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        rMax = [0] * len(nums)
+
+        for i in range(len(nums)):
+            if nums[i] + rMax[i-1] > 0:
+                rMax[i] = rMax[i-1] + nums[i]
+
+        return max(rMax)
+
+# Time complexity is O(n)
+# Space complexity is O(1)
