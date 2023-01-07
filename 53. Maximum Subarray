@@ -4,13 +4,19 @@
 
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
-        rMax = [0] * len(nums)
-
+        if max(nums) <= 0:
+            return max(nums)
+        
+        T = [0, 0]
+        
         for i in range(len(nums)):
-            if nums[i] + rMax[i-1] > 0:
-                rMax[i] = rMax[i-1] + nums[i]
+            if nums[i] + T[0] > 0:
+                T[0] += nums[i]
+                T[1] = max(T)
+            else:
+                T[0] = 0
 
-        return max(rMax)
+        return T[1]
 
 # Time complexity is O(n)
 # Space complexity is O(1)
