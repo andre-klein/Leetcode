@@ -1,0 +1,26 @@
+# T[i, j] = min dist matrix up to index i and j s.t. i<=n and j<=m
+# T[i, j] = 0 if mat[i, j] == 0
+# T[i, j] = min(T[i-1, j], T[i+1, j], T[i, j-1], T[i-1, j+1]) + 1
+
+class Solution:
+    def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
+        for i in range(len(mat)):
+            for j in range(len(mat[0])):
+                if mat[i][j] == 0:
+                    continue
+                mat[i][j] = float('inf')
+                if j > 0:
+                    mat[i][j] = min(mat[i][j-1] + 1, mat[i][j])
+                if i > 0:
+                    mat[i][j] = min(mat[i-1][j] + 1, mat[i][j])
+
+        for i in range(len(mat) -1, -1, -1):
+            for j in range(len(mat[0]) -1, -1, -1):
+                if mat[i][j] == 0:
+                    continue
+                if i < len(mat) - 1:
+                    mat[i][j] = min(mat[i][j], mat[i+1][j] + 1)
+                if j < len(mat[0]) - 1:
+                    mat[i][j] = min(mat[i][j], mat[i][j+1] + 1)
+
+        return mat
