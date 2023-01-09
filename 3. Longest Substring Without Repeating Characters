@@ -1,0 +1,13 @@
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        start, maxCount, hashMap = 0, 0, {}
+
+        for idx, char in enumerate(s):
+            if char in hashMap and hashMap[char] >= start:
+                start = hashMap[char] + 1
+                hashMap[char] = idx
+            else:
+                hashMap[char] = idx
+                maxCount = max(maxCount, idx - start + 1)
+            
+        return maxCount
