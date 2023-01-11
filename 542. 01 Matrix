@@ -24,3 +24,31 @@ class Solution:
                     mat[i][j] = min(mat[i][j], mat[i][j+1] + 1)
 
         return mat
+
+
+# second solution with BFS
+from collections import deque
+class Solution:
+    def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
+        q = deque([])
+        for r in range(len(mat)):
+            for c in range(len(mat[0])):
+                if mat[r][c] == 0: q.append([r,c])
+                else: mat[r][c] = -1
+        
+        while q:
+            r, c = q.popleft()
+            if r > 0 and mat[r-1][c] == -1:
+                q.append([r-1, c])
+                mat[r-1][c] = mat[r][c] + 1
+            if r < len(mat) - 1 and mat[r+1][c] == -1:
+                q.append([r+1, c])
+                mat[r+1][c] = mat[r][c] + 1
+            if c > 0 and mat[r][c-1] == -1:
+                q.append([r, c-1])
+                mat[r][c-1] = mat[r][c] + 1
+            if c < len(mat[0]) - 1 and mat[r][c+1] == -1:
+                q.append([r, c+1])
+                mat[r][c+1] = mat[r][c] + 1
+        
+        return mat
