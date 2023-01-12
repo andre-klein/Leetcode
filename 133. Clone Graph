@@ -1,0 +1,23 @@
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val = 0, neighbors = None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+"""
+
+from collections import deque
+class Solution:
+    def cloneGraph(self, node: 'Node') -> 'Node':
+
+        seen = set()
+        q = deque([node])
+        neighbors = deque([])
+        
+        while q:
+            cur = q.popleft()
+            if cur.val in seen:
+                break
+            len(cur.neighbors)
+            seen.add(cur.val)
+            q.append(cur.neighbors)
