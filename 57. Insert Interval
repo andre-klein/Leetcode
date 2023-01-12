@@ -1,0 +1,37 @@
+from itertools import chain, islice
+
+class Solution:
+    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        if not intervals:
+            return [newInterval]
+        
+        # True if intersect, False if not which means before
+        start = end = [len(intervals), False]
+        for i in range(len(intervals)):
+            if intervals[i][0] <= newInterval[0] <= intervals[i][1]:
+                start = [i, True]
+                break
+            if intervals[i][0] > newInterval[0]:
+                start = [i, False]
+                break
+        
+        for i in range(start[0], len(intervals)):
+            if intervals[i][0] <= newInterval[1] <= intervals[i][1]:
+                end = [i, True]
+                break
+            if intervals[i][0] > newInterval[1]:
+                end = [i, False]
+                break
+
+        if end[1]:
+            return list(chain(islice(intervals, 0, start[0]),
+                [[min(intervals[start[0]][0], newInterval[0]), max(intervals[end[0]][1], newInterval[1])]],
+                islice(intervals, end[0]+1, None)))
+        if start[1]:
+            return list(chain(islice(intervals, 0, start[0]),
+                [[min(intervals[start[0]][0], newInterval[0]), newInterval[1]]],
+                islice(intervals, end[0], None)))
+        else:
+            return list(chain(islice(intervals, 0, start[0]),
+                [newInterval],
+                islice(intervals, end[0], None)))
