@@ -1,0 +1,21 @@
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+
+        hashMap, visited = {}, set()
+        for a, b in prerequisites:
+            hashMap[a] = hashMap[a] + [b] if a in hashMap else [b]
+
+        def dfs(course):
+            if course in visited: return False
+            if course not in hashMap: return True
+            
+            visited.add(course)
+            for pre in hashMap[course]:
+                if not dfs(pre): return False
+            visited.remove(course)
+            del hashMap[course]
+            return True
+        
+        for course in range(numCourses):
+            if not dfs(course): return False
+        return True
