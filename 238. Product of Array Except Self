@@ -1,0 +1,25 @@
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        rMul, count = 1, 0
+        
+        for i in range(len(nums)):
+            if nums[i] == 0:
+                count += 1
+                rMul *= 1
+                idx = i
+                if count == 2:
+                     break
+            else:
+                rMul *= nums[i]
+
+        if count > 1:
+             nums = [0 for num in nums]
+        
+        elif count == 1:
+            nums = [0 for num in nums]
+            nums[idx] = rMul
+        
+        else:
+             nums = [rMul//num for num in nums]
+
+        return nums
