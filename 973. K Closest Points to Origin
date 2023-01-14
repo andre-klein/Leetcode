@@ -1,0 +1,5 @@
+class Solution:
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        binaryHeap = [[pow(x, 2) + pow(y, 2), x, y] for x, y in points]
+        heapq.heapify(binaryHeap)
+        return [heapq.heappop(binaryHeap)[1:] for i in range(k)]
