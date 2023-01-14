@@ -9,15 +9,14 @@ class Node:
 from collections import deque
 class Solution:
     def cloneGraph(self, node: 'Node') -> 'Node':
+        cloneMap = {}
 
-        seen = set()
-        q = deque([node])
-        neighbors = deque([])
-        
-        while q:
-            cur = q.popleft()
-            if cur.val in seen:
-                break
-            len(cur.neighbors)
-            seen.add(cur.val)
-            q.append(cur.neighbors)
+        def dfs(node):
+            if node in cloneMap:
+                return cloneMap[node]
+            cloneMap[node] = Node(node.val)
+            for neighbor in node.neighbors:
+                cloneMap[node].neighbors.append(dfs(neighbor))
+            return cloneMap[node]
+
+        return dfs(node) if node else None
