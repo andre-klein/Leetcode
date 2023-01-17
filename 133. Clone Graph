@@ -20,3 +20,28 @@ class Solution:
             return cloneMap[node]
 
         return dfs(node) if node else None
+
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val = 0, neighbors = None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+"""
+
+# Solution 2 BFS
+from collections import deque
+class Solution:
+    def cloneGraph(self, node: 'Node') -> 'Node':
+        if node:
+            cloneMap, q = {node: Node(node.val)}, collections.deque([node])
+
+            while q:
+                cur = q.popleft()
+                for neighbor in cur.neighbors:
+                    if neighbor not in cloneMap:
+                        q.append(neighbor)
+                        cloneMap[neighbor] = Node(neighbor.val)
+                    cloneMap[cur].neighbors.append(cloneMap[neighbor])
+
+            return cloneMap[node]
