@@ -1,28 +1,17 @@
-# recurrence: Let L[i] = min # of refueling stops up to index i s.t. 0 <= i <= n
-# base case: L[0] = 0
-# subproblems: L[i] = min_j(possible(L[j] + +1)) s.t. 0 <= j < i <= n
-# possible indicates it is possible to travel from aj to ai
+# recurrence: Let L[i] = max totalFuel using i stops s.t. 0 <= i <= len(stations)
+# base case: L[0] = startFuel
+# subproblems: L[i] = max_j(L[i+1], L[i+1] + stationFuel) 0 <= i <= len(stations)
 
 class Solution:
     def minRefuelStops(self, target: int, startFuel: int, stations: List[List[int]]) -> int:
-        if target <= startFuel: return 0
-        if len(stations) == 0: return -1
-        if stations[0][0] > startFuel: return -1
-
-        L = [[1, stations[0][0], stations[0][1] + startFuel - stations[0][0]]]
-        if L[0][2] + L[0][1] >= target: return L[0][0]
+        L = [startFuel] + [0] * len(stations)
+        for numStop, (stationLocation, stationFuel) in enumerate(stations):
+            for j in range(numStop, -1, -1):
+                if L[j] >= stationLocation:
+                    L[j+1] = max(L[j+1], L[j] + stationFuel)
+                
+        for numStop, totalFuel in enumerate(L):
+            if totalFuel >= target:
+                 return numStop
         
-        for i in range(1, len(stations)):
-            if stations[i][0] <= startFuel:
-                L.append([1, stations[i][0], stations[i][1] + startFuel - stations[i][0]])
-            else:
-                L.append([float('inf'), 0, 0])
-            for j in range(i):
-                distance = stations[i][0] - stations[j][0]
-                if L[j][2] >= distance and L[i][0] > L[j][0] + 1:
-                    L[i] = [L[j][0] + 1, L[j][1] + distance, L[j][2] - distance + stations[i][1]]
-            if L[i][2] + L[i][1] >= target:
-                return L[i][0]
-
-        print(L)
         return -1
