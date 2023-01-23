@@ -1,5 +1,7 @@
 To Do:
 
+Clean up dynamic programming problems
+
 694. Number of Distinct Islands
 
 973. K Closest Points to Origin
