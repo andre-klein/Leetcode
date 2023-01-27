@@ -1,5 +1,46 @@
+# first solution:
+
 class Solution:
     def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
         binaryHeap = [[pow(x, 2) + pow(y, 2), x, y] for x, y in points]
         heapq.heapify(binaryHeap)
         return [heapq.heappop(binaryHeap)[1:] for i in range(k)]
+
+# O(n*logn) time and O(n) space
+
+##########################################
+# second solution:
+
+class Solution:
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        dist = [pow(point[0], 2) + pow(point[1], 2) for point in points]
+        
+        def fastSelect(A, k):
+            S = []
+            for i in range(0, len(A), 5):
+                if i+5 <= len(A):
+                    S.append(sorted(A[i:i+5])[2])
+                else:
+                    G, m = sorted(A[i:]), (len(A)-i)//2
+                    if len(G) % 2 == 0:
+                        S.append((G[m] + G[m-1])/2)
+                    else:
+                        S.append(G[m])
+
+            p = S[0] if len(S) == 1 else fastSelect(S, -(-len(S)//5))
+            smaller, larger = [], []
+
+            for num in A:
+                if num < p: smaller.append(num)
+                elif num > p: larger.append(num)
+
+            if k <= len(smaller):
+                return fastSelect(smaller, k)
+            if k > (len(A) - len(larger)):
+                return fastSelect(larger, k - len(A) + len(larger))
+            return p
+        
+        p = fastSelect(dist, k)
+        return [points[i] for i in range(len(dist)) if dist[i] <= p]
+        
+# O(n) time and O(n) space
