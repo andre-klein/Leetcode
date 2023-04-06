@@ -1,9 +1,9 @@
 class Solution {
 public:
-    int maxProfit(vector<int>& prices) {
+    int maxProfit(const vector<int>& prices) {
         int curMax = 0;
         int curMin = prices[0];
-        for (int i = 1; i < prices.size(); i++) {
+        for (int i = 1; i < prices.size(); ++i) {
             if (prices[i] > curMin) {
                 curMax = max(curMax, prices[i]-curMin);
             } else {
