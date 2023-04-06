@@ -1,0 +1,29 @@
+#include <unordered_map>
+
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        unordered_map<char, int> dict;
+
+        for (char c : s) {
+            dict[c]++;
+        }
+
+        for (char c : t) {
+            if (dict.count(c)) {
+                if (dict[c] > 0) {
+                    dict[c]--;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+
+        auto maxPair = max_element(dict.begin(), dict.end(),
+            [](const auto& curMax, const auto& cur) { return curMax.second < cur.second; });
+        
+        return bool(maxPair->second == 0);
+    }
+};
