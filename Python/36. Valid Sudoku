@@ -1,0 +1,20 @@
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        rows, cols, squares = [0]*9, [0]*9, [0]*9
+        
+        for row in range(9):
+            for col in range(9):
+                if board[row][col] == ".":
+                    continue
+
+                bit_mask = 1 << int(board[row][col]) - 1
+                square_idx = (row // 3) * 3 + (col // 3)
+                
+                if (rows[row] & bit_mask) or (cols[col] & bit_mask) or (squares[square_idx] & bit_mask):
+                    return False
+                
+                rows[row] |= bit_mask
+                cols[col] |= bit_mask
+                squares[square_idx] |= bit_mask
+        
+        return True
