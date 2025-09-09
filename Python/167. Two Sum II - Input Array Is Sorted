@@ -8,7 +8,7 @@ class Solution:
             if cur_sum == target:
                 return [left + 1, right + 1]
             
-            if numbers[left] + numbers[right] > target:
+            if cur_sum > target:
                 right -= 1
             else:
                 left += 1
