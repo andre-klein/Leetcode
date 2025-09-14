@@ -1,0 +1,37 @@
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        area = 0
+        left, right = 0, len(height) - 1
+        lmax, rmax = 0, 0
+
+        while left < right:
+            lh, rh = height[left], height[right]
+            lmax, rmax = max(lmax, lh), max(rmax, rh)
+            if lh < rh:
+                area += max(0, min(lmax, rmax) - lh)
+                left += 1
+            else:
+                area += max(0, min(lmax, rmax) - rh)
+                right -= 1
+        
+        return area
+
+# Second solution (less readable):
+
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        area = 0
+        left, right = 0, len(height) - 1
+        lmax, rmax = 0, 0
+
+        while left < right:
+            lh, rh = height[left], height[right]
+            lmax, rmax = max(lmax, lh), max(rmax, rh)
+            if lh < rh:
+                area += lmax - lh
+                left += 1
+            else:
+                area += rmax - rh
+                right -= 1
+        
+        return area
