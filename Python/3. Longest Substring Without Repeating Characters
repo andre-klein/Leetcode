@@ -11,3 +11,17 @@ class Solution:
                 maxCount = max(maxCount, idx - start + 1)
             
         return maxCount
+
+********************
+
+# Second Solution
+
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        cur_dict, rMax, start = {}, 0, 0
+        for idx, char in enumerate(s):
+            if char in cur_dict and cur_dict[char] >= start:
+                start = cur_dict[char] + 1
+            cur_dict[char] = idx
+            rMax = max(rMax, idx - start + 1)
+        return rMax
