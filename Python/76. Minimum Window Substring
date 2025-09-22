@@ -1,0 +1,27 @@
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        if not s or not t or len(s) < len(t):
+            return ""
+
+        count, window = {}, {}
+
+        for char in t:
+            count[char] = count.get(char, 0) + 1
+        
+        l, matches, res, res_size = 0, 0, [], float('inf')
+        
+        for r, char in enumerate(s):
+            window[char] = window.get(char, 0) + 1
+            if char in count and window[char] == count[char]:
+                matches += 1
+            while matches == len(count):
+                if r - l + 1 < res_size:
+                    res_size = r - l + 1
+                    res = [l, r]
+                left = s[l]
+                window[left] -= 1
+                if left in count and window[left] < count[left]:
+                    matches -= 1
+                l += 1
+                
+        return s[res[0]:res[1] + 1] if res_size != float('inf') else ""
