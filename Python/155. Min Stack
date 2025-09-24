@@ -1,57 +1,47 @@
+# Solution 1:
+
 class MinStack:
 
     def __init__(self):
         self.stack = []
-
-    def push(self, val: int) -> None:
-        if not self.stack:
-            self.stack.append((val, val))
-        else:
-            self.stack.append((val, min(val, self.stack[-1][1])))
-
-    def pop(self) -> None:
-        return self.stack.pop()[0]
-
-    def top(self) -> int:
-        return self.stack[-1][0]
-
-    def getMin(self) -> int:
-        return self.stack[-1][1]
-
-# Your MinStack object will be instantiated and called as such:
-# obj = MinStack()
-# obj.push(val)
-# obj.pop()
-# param_3 = obj.top()
-# param_4 = obj.getMin()
-
-# Solution 2
-class MinStack:
-
-    def __init__(self):
-        self.stack = []
-        self.minstack = []
+        self.rStack = []
 
     def push(self, val: int) -> None:
         self.stack.append(val)
-        if not self.minstack or self.minstack[-1][0] > val: self.minstack.append((val, 1))
-        elif self.minstack[-1][0] == val: self.minstack[-1] = (val, self.minstack[-1][1] + 1)
-
+        if self.rStack and val > self.rStack[-1]:
+            self.rStack.append(self.rStack[-1])
+        else:
+            self.rStack.append(val)
+        
     def pop(self) -> None:
-        if self.minstack[-1][0] == self.stack[-1]:
-            if self.minstack[-1][1] == 1: self.minstack.pop()
-            else: self.minstack[-1] = (self.stack[-1], self.minstack[-1][1]-1)
-        return self.stack.pop()
+        self.stack.pop()
+        self.rStack.pop()
 
     def top(self) -> int:
         return self.stack[-1]
 
     def getMin(self) -> int:
-        return self.minstack[-1][0]
+        return self.rStack[-1]
 
-# Your MinStack object will be instantiated and called as such:
-# obj = MinStack()
-# obj.push(val)
-# obj.pop()
-# param_3 = obj.top()
-# param_4 = obj.getMin()
+# Solution 2:
+
+class MinStack:
+
+    def __init__(self):
+        self.stack = []
+        self.rStack = []
+
+    def push(self, val: int) -> None:
+        self.stack.append(val)
+        if not self.rStack or val <= self.rStack[-1]:
+            self.rStack.append(val)
+        
+    def pop(self) -> None:
+        if self.stack.pop() == self.rStack[-1]:
+            self.rStack.pop()
+
+    def top(self) -> int:
+        return self.stack[-1]
+
+    def getMin(self) -> int:
+        return self.rStack[-1]
