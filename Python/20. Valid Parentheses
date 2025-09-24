@@ -1,34 +1,12 @@
 class Solution:
     def isValid(self, s: str) -> bool:
-        stack = []
-        tuple_1 = (')', ']', "}")
-        
-        def stackHelper():
-            if len(stack) > 0:
-                last = stack[-1]
-                if char == ")" and last == "(":
-                    stack.pop()
-                    return 1
-                elif char == "]" and last == "[":
-                    stack.pop()
-                    return 1
-                elif char == "}" and last == "{":
-                    stack.pop()
-                    return 1
-                else:
-                    return 0
-            else:
-                return 0
-
+        cur = []
+        mapping = {')': '(', ']': '[', '}': '{'}
         for char in s:
-            if char in tuple_1:
-                test = stackHelper()
-                if test == 0:
+            if char in mapping:
+                if not cur or cur[-1] != mapping[char]:
                     return False
+                cur.pop()
             else:
-                stack.append(char)
-
-        if len(stack) == 0:
-            return True
-        else:
-            return False
+                cur.append(char)
+        return True if len(cur) == 0 else False
