@@ -1,0 +1,13 @@
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        res, stack = [], [("", 0, 0)]
+        while stack:
+            cur, left, right = stack.pop()
+            if left == n and right == n:
+                res.append(cur)
+                continue
+            if left < n:
+                stack.append((cur + "(", left + 1, right))
+            if right < left:
+                stack.append((cur + ")", left, right + 1))
+        return res
