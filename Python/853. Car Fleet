@@ -1,0 +1,28 @@
+# Solution 1:
+
+class Solution:
+    def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
+        position, speed = zip(*sorted(zip(position, speed), reverse=True))
+        fleet, slowest, switch = 1, 0, False
+        for i in range(1, len(position)):
+            t_prev = (target - position[i]) / speed[i]
+            t_ahead = (target - position[slowest]) / speed[slowest]
+            if t_prev > t_ahead:
+                fleet += 1
+                slowest, switch = i, True
+            else:
+                switch = False
+        return fleet
+
+# Solution 2:
+
+class Solution:
+    def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
+        cars = sorted(zip(position, speed), reverse=True)
+        fleets, old_t = 0, 0
+        for pos, spd in cars:
+            new_t = (target - pos) / spd
+            if new_t > old_t:
+                fleets += 1
+                old_t = new_t
+        return fleets
