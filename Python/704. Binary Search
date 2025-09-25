@@ -1,3 +1,5 @@
+# Solution 1:
+
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
         i = 0
@@ -14,3 +16,16 @@ class Solution:
                 j = m - 1
             else:
                 return m
+
+# Solution 2:
+
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        left, right = 0, len(nums) - 1
+        while left != right:
+            mid = (left + right) // 2
+            if nums[mid] < target:
+                left = mid + 1
+            else:
+                right = mid
+        return -1 if nums[left] != target else left
