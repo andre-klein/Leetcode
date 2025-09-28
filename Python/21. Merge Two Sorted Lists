@@ -8,7 +8,7 @@ class Solution:
         if not list1:
             return list2
         if not list2:
-            return list2
+            return list1
 
         dummy = ListNode(0)
         current = dummy
