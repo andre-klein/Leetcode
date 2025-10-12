@@ -1,3 +1,5 @@
+# Solution 1 O(h) space O(n) time:
+
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -6,12 +8,9 @@
 #         self.right = right
 class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        
         stack = []
-        
         if root:
             stack = [root]
-        
         while stack:
             node = stack.pop()
             if node.left:
@@ -19,12 +18,9 @@ class Solution:
             if node.right:
                 stack.append(node.right)
             node.left, node.right = node.right, node.left
-        
         return root
 
-# Note that recursive solution is better O(h) space 
-# This solution yields O(n) time and O(n) space
-# Recursive solution is very simple (DFS)
+# Solution 2 O(h) space O(n) time:
 
 # Definition for a binary tree node.
 # class TreeNode:
@@ -34,9 +30,7 @@ class Solution:
 #         self.right = right
 class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        
         if root:
             right, left = self.invertTree(root.right), self.invertTree(root.left)
             root.left, root.right = right, left
-        
         return root
