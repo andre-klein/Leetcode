@@ -1,3 +1,5 @@
+# Solution 1:
+
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -15,3 +17,24 @@ class Solution:
             return [L[0] and R[0] and (abs(L[1] - R[1]) < 2), max(L[1], R[1]) + 1]
         
         return dfs(root)[0]
+
+# Solution 2:
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
+        res = [True]
+        def dfs(cur):
+            if not cur:
+                return 0
+            left, right = dfs(cur.left), dfs(cur.right)
+            if abs(left - right) > 1:
+                res[0] = False
+            return max(left, right) + 1
+        dfs(root)
+        return res[0]
